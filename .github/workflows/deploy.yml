@@ -23,6 +23,18 @@ jobs:
         with:
           version: 9.15.5
           run_install: false
+      - name: Diagnose pnpm cache setup
+        shell: bash
+        run: |
+          set -euxo pipefail
+          echo "Git commit: $(git rev-parse HEAD)"
+          echo "Working directory: $(pwd)"
+          echo "Node: $(node --version)"
+          echo "pnpm: $(pnpm --version)"
+          echo "pnpm-workspace.yaml:"
+          cat pnpm-workspace.yaml
+          echo "Testing the pnpm store command used by setup-node cache:"
+          pnpm store path --silent
       - uses: actions/setup-node@v4
         with:
           node-version: 22
